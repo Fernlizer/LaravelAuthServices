@@ -22,7 +22,8 @@ use App\Http\Controllers\auth\GoogleController;
 //     Route::post('/updateSubCategoryStatus', 'updateSubCategoryStatus')->name('admin.service.subcategory.update.status');
 // });
 
-Route::controller(GoogleController::class)->group(function () {
+Route::controller(GoogleController::class)->middleware(['web'])->group(function () {
     Route::get('/google/redirect', 'redirectToGoogle')->name('google.redirect');
     Route::get('/callback/gg', 'handleGoogleCallback')->name('google.callback');
+    Route::get('/validate/token', 'validateToken')->name('google.token.validate');
 });
