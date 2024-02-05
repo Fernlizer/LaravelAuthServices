@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auth\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::controller(GoogleController::class)->prefix('subcategory')->group(function () {
+//     Route::get('/', 'page')->name('admin.service.subcategory');
+//     Route::post('/AddSubCategory', 'addSubCategory')->name('admin.service.subcategory.add');
+//     Route::post('/getSubCategory', 'getSubCategory')->name('admin.service.subcategory.get');
+//     Route::post('/updateSubCategory', 'updateSubCategory')->name('admin.service.subcategory.update');
+//     Route::post('/updateSubCategoryStatus', 'updateSubCategoryStatus')->name('admin.service.subcategory.update.status');
+// });
+
+Route::controller(GoogleController::class)->group(function () {
+    Route::get('/google/redirect', 'redirectToGoogle')->name('google.redirect');
+    Route::get('/callback/gg', 'handleGoogleCallback')->name('google.callback');
 });
