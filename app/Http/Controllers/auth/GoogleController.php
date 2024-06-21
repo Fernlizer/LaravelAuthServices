@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class GoogleController extends Controller
 {
@@ -40,7 +41,11 @@ class GoogleController extends Controller
         ]);
         // Validates the token from the request
         try {
-            $user = Socialite::driver('google')->stateless()->userFromToken($validateData['token']);
+            $userData = Socialite::driver('google')->stateless()->userFromToken($validateData['token']);
+            $email = $userData['email'];
+            $user = DB::table('users')->where('email', $email)->first();
+
+
             // Process the user details returned from Google
             return response()->json($user);
         } catch (Exception $e) {
